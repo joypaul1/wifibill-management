@@ -1,69 +1,54 @@
 @extends('backend.layouts.master')
 @section('title', 'Quick Page')
-@section('page-header')
-    <i class="fa fa-info"></i> Quick Page
-@endsection
-@push('css')
-    <style>
-        @media only screen and (min-width: 768px) {
-            .widget-box.first {
-                margin-top: 0 !important;
-            }
-        }
-    </style>
-@endpush
+
 
 @section('content')
-    @include('backend.components.page_header')
+@include('backend.components.page_header', [
+    'fa' => 'list',
+    'name' => 'Page List',
+    'header_name' => 'Page Edit',
+    'route' =>route('backend.site_config.quick-page.index'),
+    ])
 
     {{--  Start here  --}}
-    <div class="row">
-        <div class="col-sm-9">
-            <form action="{{ route('backend.site_config.quick-page.update',$page->id) }}" method="post" class="form-horizontal"
-                  role="form" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label class="col-sm-2 no-padding-right bolder" for="name">
-                        Page Name</label>
-
-                    <div class="col-sm-10">
-                        <input name="name"
-                               type="text"
-                               id="name"
-                               placeholder="Company Name"
-                               class="form-control"
-                               value="{{ $page->name }}">
-                    </div>
-                    <div class="col-sm-9 col-sm-offset-2">
-                        <strong class=" red">{{ $errors->first('name') }}</strong>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 no-padding-right bolder" for="short_desc">Description </label>
-                    <div class="col-sm-10">
-                        @include('backend.components.summer_note',[
-                        'name'=>'short_desc',
-                        'content' =>$page->short_desc,
-                        ])
-                        <div class="col-sm-9 col-sm-offset-2">
-                            <strong class=" red">{{ $errors->first('short_desc') }}</strong>
+    <section class="bs-validation">
+        <div class="col-md-12 col-12">
+            <div class="card">
+    
+                <div class="card-body">
+                    <form class="needs-validation" method="post" action="{{ route('backend.site_config.quick-page.update',$page->id) }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-1">
+                            <label for="customFile1" class="form-label">Page Name</label>
+                            <input name="name" class="form-control" type="text" id="customFile1" value="{{ $page->name }}" required="">
+                            <div class="invalid-feedback">Please Page Name.</div>
+                            <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+    
                         </div>
-                    </div>
-                </div>
-
-                 <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-4">
-                    <button class="btn btn-sm btn-success submit"><i class="fa fa-save"></i> Update</button>
-
-                    <a href="{{ route('backend.site_config.quick-page.index') }}" class="btn btn-sm btn-gray"> <i
-                            class="fa fa-refresh"></i>
-                        Cancel</a>
+                        <div class="mb-1">
+                            <label class="form-label" for="basic-addon-name">Description</label>
+                           
+                            @include('backend.components.summer_note',[
+                                'name'=>'short_desc',
+                                'content' =>$page->short_desc,
+                                ])
+                            <div class="invalid-feedback">{{ $errors->first('short_desc') }}</div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{route('backend.site_config.quick-page.index')}}" class="btn btn-warning btn-md"> <i
+                                    class="fa fa-refresh"></i>
+                                Cancel</a>
+    
+                        </div>
+    
+                    </form>
                 </div>
             </div>
-            </form>
         </div>
-    </div>
+    </section>
+
 @endsection
 
 @push('js')

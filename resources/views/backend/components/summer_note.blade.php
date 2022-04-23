@@ -1,31 +1,19 @@
-@push('css')
-<link href="{{ asset('assets/css/summernote.min.css') }}" rel="stylesheet">
-<style>
-  .note-toolbar.panel-heading {
-    background-color: #669FC7 !important;
-  }
 
-  .note-btn.btn.btn-default.btn-sm {
-    background-color: white !important;
-    border-color: #669FC7 !important;
-    color: black !important;
-  }
-  .panel {
-    margin-bottom: 0 !important;
-  }
-</style>
-@endpush
-
-<textarea id="summernote" class="form-control summernote" name="{{ $name }}">{{  $content ?? ''  }}</textarea>
+<textarea id="mytextarea" class="form-control summernote" name="{{ $name }}" >{{  $content ?? ''  }}</textarea>
 
 @push('js')
-<script src="{{ asset('assets/js/summernote.min.js') }}"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-  $(document).ready(function() {
-        $('#summernote').summernote({
-            placeholder: {!! $placeholder ?? "'Write something...'" !!},
-            height: {{ $height ?? 300 }}
-        });
+    tinymce.init({
+      selector: '#mytextarea',
+      plugins: [
+        'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+        'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+        'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+      ],
+      toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
     });
-</script>
+  </script>
 @endpush

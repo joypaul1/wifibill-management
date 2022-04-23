@@ -1,5 +1,5 @@
 {{--@if ($data->appends(request()->query())->count() > 0)--}}
-    <span class="pull-right">
+    <span class="d-block text-right">
         <ul class="pagination">
         <li class=" @if($data->appends(request()->query())->currentPage() == 1) disabled @endif">
             <a class="" href="{{ $data->appends(request()->query())->url(1) }}">← First</a>

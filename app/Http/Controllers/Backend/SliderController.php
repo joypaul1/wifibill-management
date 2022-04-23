@@ -41,7 +41,7 @@ class SliderController extends Controller
      */
     public function store(SliderRequest $request)
     {
-        
+
          $all =($request->all());
         $all['image'] = (new SimpleUpload)
             ->file($request->image)

@@ -1,24 +1,12 @@
-<style>
-    @media only screen and (max-width: 768px) {
-        .pull-right.custom {
-            display: block;
-            float: none !important;
-        }
-    }
-</style>
+<div class="sidenav-overlay"></div>
+<div class="drag-target"></div>
 
-<div class="footer hidden-print">
-    <div class="footer-inner">
-        <div class="footer-content">
-            <span class="bigger-110">
-                Copyright &copy; <span class="blue bolder">{{ $info->name }}</span>
-            </span>
-            <strong class="pull-right custom">Developed By: <a href="https://www.smartsoftware.com.bd/"
-                                                               target="__blank"> Smart Software Ltd</a></strong>
-        </div>
-    </div>
-</div>
-
-<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-</a>
+<!-- BEGIN: Footer-->
+<footer class="footer footer-static footer-light">
+    <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021<a
+                class="ms-25" href="#" target="_blank">admin</a><span
+                class="d-none d-sm-inline-block">, All rights Reserved</span></span><span
+            class="float-md-end d-none d-md-block">admin<i data-feather="heart"></i></span></p>
+</footer>
+<button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+<!-- END: Footer-->

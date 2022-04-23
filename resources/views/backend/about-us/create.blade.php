@@ -1,55 +1,40 @@
 @extends('backend.layouts.master')
 @section('title', 'About-Us')
-@section('page-header')
-    <i class="fa fa-eye"></i> About-Us
-@endsection
-@push('css')
-    <style>
-        @media only screen and (min-width: 768px) {
-            .widget-box.first {
-                margin-top: 0 !important;
-            }
-        }
-    </style>
-@endpush
+
+
 
 @section('content')
-    @include('backend.components.page_header')
-
-    {{--  Start here  --}}
-    <div class="row">
-        <div class="col-sm-9">
-            <form action="{{ route('backend.site_config.about-us.update') }}" method="post" class="form-horizontal"
-                  role="form" enctype="multipart/form-data">
-                @csrf
-
-                
-                <div class="form-group">
-                    <label class="col-sm-2 no-padding-right bolder" for="description">Description </label>
-                    <div class="col-sm-10">
-                        @include('backend.components.summer_note',[
-                        'name'=>'description',
-                        'content'=>$aboutus->description,
-                        ])
-                        <div class="col-sm-9 col-sm-offset-2">
-                            <strong class=" red">{{ $errors->first('description') }}</strong>
+  
+    <section class="bs-validation row">
+        <div class="col-md-12 col-12">
+            <div class="card">  
+                <div class="card-body">
+                    <form class="needs-validation" action="{{ route('backend.site_config.about-us.update') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        
+                        <div class="mb-1">
+                            <label for="customFile1" class="form-label">Description</label>
+                            @include('backend.components.summer_note',[
+                                'name'=>'description',
+                                'content'=>$aboutus->description,
+                                ])
+                            <div class="invalid-feedback">Please enter Image.</div>
+                            <div class="invalid-feedback">{{ $errors->first('image') }}</div>
+    
                         </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <i class="ace-icon fa fa-floppy-o"></i>
-                                Submit
-                            </button>
+                        
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{route('backend.site_config.slider.index')}}" class="btn btn-warning btn-md"> <i
+                                    class="fa fa-refresh"></i>
+                                Cancel</a>
+    
                         </div>
-                    </div>
+    
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-
-   
-    </div>
+    </section>
 @endsection

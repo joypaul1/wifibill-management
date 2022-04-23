@@ -1,131 +1,86 @@
 @extends('backend.layouts.master')
 @section('title', 'Site Information')
-@section('page-header')
-    <i class="fa fa-info"></i> Information
-@endsection
-@push('css')
-    <style>
-        @media only screen and (min-width: 768px) {
-            .widget-box.first {
-                margin-top: 0 !important;
-            }
-        }
-    </style>
-@endpush
+
 
 @section('content')
-    @include('backend.components.page_header')
+@include('backend.components.page_header', [
+    'fa' => 'list',
+    'name' => 'Site Information',
+    'header_name' => 'Site Information',
+    'route' =>'#',
+    ])
 
-    <div class="col-sm-9">
-        <form action="{{ route('backend.site_config.info') }}" method="post" class="form-horizontal"
-              role="form" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label class="col-sm-2 no-padding-right bolder" for="name">Name</label>
+    <section class="bs-validation">
+        <div class="col-md-8 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="needs-validation" method="post" action="{{ route('backend.site_config.quick-page.store') }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-1">
+                            <label for="name" class="form-label"> Name</label>
+                            <input name="name" class="form-control" type="text"  id="name" required=""
+                            placeholder="Company Name"   value="{{ $info->name ?? old('name') }}">
+                            <div class="invalid-feedback">Please Name.</div>
+                            <div class="invalid-feedback">{{ $errors->first('name') }}</div>
 
-                <div class="col-sm-10">
-                    <input name="name"
-                           type="text"
-                           id="name"
-                           placeholder="Company Name"
-                           class="form-control"
-                           value="{{ $info->name ?? old('name') }}">
-                </div>
-                <div class="col-sm-9 col-sm-offset-2">
-                    <strong class=" red">{{ $errors->first('name') }}</strong>
+                        </div>
+                        <div class="mb-1">
+                            <label for="email" class="form-label">Email</label>
+                            <input name="email" class="form-control" type="email"  id="email" required=""
+                            placeholder="Company Email"   value="{{ $info->email ?? old('email') }}">
+                            <div class="invalid-feedback">Please email.</div>
+                            <div class="invalid-feedback">{{ $errors->first('email') }}</div>
+
+                        </div>
+                        <div class="mb-1">
+                            <label for="mobile" class="form-label">Mobile</label>
+                            <input name="mobile" class="form-control" type="text"  id="mobile" required=""
+                            placeholder="Company mobile"   value="{{ $info->mobile ?? old('mobile') }}">
+                            <div class="invalid-feedback">Please mobile.</div>
+                            <div class="invalid-feedback">{{ $errors->first('mobile') }}</div>
+
+                        </div>
+                        <div class="mb-1">
+                            <label for="address" class="form-label">Address</label>
+                            <input name="address" class="form-control" type="text"  id="address" required=""
+                            placeholder="Company mobile"   value="{{ $info->address ?? old('address') }}">
+                            <div class="invalid-feedback">Please address.</div>
+                            <div class="invalid-feedback">{{ $errors->first('address') }}</div>
+
+                        </div>
+                        <div class="mb-1">
+                            <label for="logo" class="form-label">Logo</label>
+                            <input name="logo" class="form-control" type="file"  id="logo" required=""
+                            placeholder="Company logo"   onchange="readURL(this);">
+                            <div class="invalid-feedback">Please logo.</div>
+                            <div class="invalid-feedback">{{ $errors->first('address') }}</div>
+
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="basic-addon-name">Description</label>
+                            @include('backend.components.summer_note',[
+                                'name'=>'short_desc',
+                                'content'=>$info->short_desc ?? old('short_desc')
+                                ])
+                            <div class="invalid-feedback">{{ $errors->first('short_desc') }}</div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{route('backend.site_config.quick-page.index')}}" class="btn btn-warning btn-md"> <i
+                                    class="fa fa-refresh"></i>
+                                Cancel</a>
+    
+                        </div>
+    
+                    </form>
                 </div>
             </div>
+        </div>
+    </section>
+   
 
-            <div class="form-group">
-                <label class="col-sm-2 no-padding-right bolder" for="email">Email</label>
-
-                <div class="col-sm-10">
-                    <input name="email"
-                           type="email"
-                           id="email"
-                           placeholder="Email"
-                           class="form-control"
-                           value="{{ $info->email ?? old('email') }}">
-                </div>
-                <div class="col-sm-9 col-sm-offset-2">
-                    <strong class=" red">{{ $errors->first('email') }}</strong>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 no-padding-right bolder" for="mobile">Mobile</label>
-                <div class="col-sm-10 ">
-                    <input name="mobile"
-                           type="text"
-                           id="mobile"
-                           placeholder="Mobile No."
-                           class="form-control"
-                           value="{{ $info->mobile ?? old('mobile') }}">
-                </div>
-                <div class="col-sm-9 col-sm-offset-2">
-                    <strong class=" red">{{ $errors->first('mobile') }}</strong>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 no-padding-right bolder" for="address">Address</label>
-                <div class="col-sm-10">
-                                <textarea name="address"
-                                          id="address"
-                                          rows="1"
-                                          class="form-control"
-                                          placeholder="Address"
-                                          style="resize: none;padding: 5px 4px 6px !important;">{{ $info->address ?? old('address') }}</textarea>
-                </div>
-                <div class="col-sm-9 col-sm-offset-2">
-                    <strong class=" red">{{ $errors->first('address') }}</strong>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 no-padding-right bolder" for="logo">Logo
-                </label>
-                <div class="col-sm-10 ">
-                    <input name="logo"
-                           type="file"
-                           id="logo"
-                           class="form-control"
-                           onchange="readURL(this);">
-                    <div class="col-sm-9">
-                        <strong class=" red">{{ $errors->first('logo') }}</strong>
-                    </div>
-                </div>
-                <label class="col-sm-offset-2 col-sm-10  red text-align-left"
-                       for="logo">Minimum 150x33 pixels</label>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 no-padding-right bolder" for="short_desc">Description </label>
-                <div class="col-sm-10">
-                    @include('backend.components.summer_note',[
-                    'name'=>'short_desc',
-                    'content'=>$info->short_desc ?? old('short_desc')
-                    ])
-                    <div class="col-sm-9 col-sm-offset-2">
-                        <strong class=" red">{{ $errors->first('short_desc') }}</strong>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-sm btn-success">
-                            <i class="ace-icon fa fa-floppy-o"></i>
-                            Submit
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="col-sm-3">
+    {{-- <div class="col-sm-3">
         <div class="widget-box first">
             <div class="widget-header">
                 <h4 class="widget-title">Site Logo</h4>
@@ -172,7 +127,7 @@
                 </div>
             </div>
         </div><!-- /.col -->
-    </div>
+    </div> --}}
 @endsection
 
 @push('js')

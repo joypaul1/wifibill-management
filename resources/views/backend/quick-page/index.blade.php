@@ -1,73 +1,72 @@
 @extends('backend.layouts.master')
 
 @section('title','Quick-page List')
-@section('page-header')
-    <i class="fa fa-list"></i> Page List
-@stop
-
-@push('css')
-    <style>
-        table th,
-        td {
-            text-align: center !important;
-            vertical-align: middle !important;
-        }
-    </style>
-@endpush
-
 @section('content')
     @include('backend.components.page_header', [
-       'fa' => 'fa fa-pencil',
-       'name' => 'Create page',
+       'fa' => 'plus',
+       'name' => 'Create Page',
+       'header_name' => 'Page List',
        'route' => route('backend.site_config.quick-page.create')
     ])
 
-    <table class="table table-bordered">
-        <tbody>
-        <tr>
-            <th class="bg-dark" style="width: 10px">SL</th>
-            <th class="bg-dark" style="width: 20%">Name</th>
-            <th class="bg-dark" style="width: 20%">Slug</th>
-            <th class="bg-dark" style="width: 20%">Descripyion</th>
-            <th class="bg-dark" style="">Action</th>
-        </tr>
-        @forelse($pages as $key => $page)
-            <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ $page->name }}</td>
-                <td>{{ $page->slug }}</td>
-                <td>
-                    {!! \Illuminate\Support\Str::limit($page->short_desc,50) !!}
-                </td>
-                <td>
-                    <div class="btn-group btn-group-mini btn-corner">
-                        <a href="{{ route('backend.site_config.quick-page.edit', $page->id) }}"
-                           class="btn btn-xs btn-info"
-                           title="Edit">
-                            <i class="ace-icon fa fa-pencil"></i>
-                        </a>
 
-                        <button type="button" class="btn btn-xs btn-danger"
-                                onclick="delete_check({{$page->id}})"
-                                title="Delete">
-                            <i class="ace-icon fa fa-trash-o"></i>
-                        </button>
+    <div class="row" id="basic-table">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th style="width: 10px">SL</th>
+                                <th style="width: 20%">Name</th>
+                                <th style="width: 20%">Slug</th>
+                                <th style="width: 50%">Descripyion</th>
+                                <th style="">Action</th>
+                            </tr>
+                            @forelse($pages as $key => $page)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $page->name }}</td>
+                                    <td>{{ $page->slug }}</td>
+                                    <td>
+                                        {!! \Illuminate\Support\Str::limit($page->short_desc,50) !!}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-mini btn-corner">
+                                            <a href="{{ route('backend.site_config.quick-page.edit', $page->id) }}"
+                                               class="btn btn-xs btn-info"
+                                               title="Edit">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+                    
+                                            <button type="button" class="btn btn-xs btn-danger"
+                                                    onclick="delete_check({{$page->id}})"
+                                                    title="Delete">
+                                                <i class="ace-icon fa fa-trash-o"></i>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('backend.site_config.quick-page.destroy', $page->id)}}"
+                                              id="deleteCheck_{{ $page->id }}" method="GET">
+                                            @csrf
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5">No data available in table</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
                     </div>
-                    <form action="{{ route('backend.site_config.quick-page.destroy', $page->id)}}"
-                          id="deleteCheck_{{ $page->id }}" method="GET">
-                        @csrf
-                    </form>
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="5">No data available in table</td>
-            </tr>
-        @endforelse
-        </tbody>
-    </table>
-
-    @include('backend.partials._paginate', ['data' => $pages])
+    
+                    @include('backend.partials._paginate', ['data' => $pages])
+    
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')

@@ -39,10 +39,10 @@ class QuickPageController extends Controller
      */
     public function store(QuickpageRequest $request)
     {
-        // dd($request);
+
         $all = $request->all();
         QuickPage::create($all);
-        return back()->with('message', 'Quick Page created Successfully.');
+        return redirect()->route('backend.site_config.quick-page.index')->with('message', 'Quick Page created Successfully.');
 
     }
 
@@ -81,7 +81,7 @@ class QuickPageController extends Controller
     {
         $page = QuickPage::find($id);
         $page->update($request->all());
-       return back()->with('message', 'Quick Page updated Successfully.');
+       return redirect()->route('backend.site_config.quick-page.index')->with('message', 'Quick Page updated Successfully.');
     }
 
     /**
@@ -94,6 +94,6 @@ class QuickPageController extends Controller
     {
         $page = QuickPage::find($id);
         $page->delete();
-       return back()->with('error', 'Quick Page deleted Successfully!.');
+        return back()->with('error', 'Quick Page deleted Successfully!.');
     }
 }

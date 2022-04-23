@@ -35,15 +35,15 @@ Route::group(['prefix' => '/slider'], function (){
 
 // quick page
 Route::group(['prefix' => '/quick-page'], function (){
-    Route::get('/','QuickpageController@index')->name('backend.site_config.quick-page.index');
-    Route::get('/create','QuickpageController@create')->name('backend.site_config.quick-page.create');
-    Route::get('/edit/{id}','QuickpageController@edit')->name('backend.site_config.quick-page.edit');
-    Route::post('/store','QuickpageController@store')->name('backend.site_config.quick-page.store');
-    Route::get('/delete/{id}','QuickpageController@destroy')->name('backend.site_config.quick-page.destroy');
-    Route::post('/update/{id}','QuickpageController@update')->name('backend.site_config.quick-page.update');
+    Route::get('/','QuickPageController@index')->name('backend.site_config.quick-page.index');
+    Route::get('/create','QuickPageController@create')->name('backend.site_config.quick-page.create');
+    Route::get('/edit/{id}','QuickPageController@edit')->name('backend.site_config.quick-page.edit');
+    Route::post('/store','QuickPageController@store')->name('backend.site_config.quick-page.store');
+    Route::get('/delete/{id}','QuickPageController@destroy')->name('backend.site_config.quick-page.destroy');
+    Route::post('/update/{id}','QuickPageController@update')->name('backend.site_config.quick-page.update');
 
 });
- 
+
 // Offer page
 Route::group(['prefix' => '/offer'], function (){
     Route::get('/','OfferController@index')->name('backend.site_config.offer.index');
