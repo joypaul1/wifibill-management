@@ -10,11 +10,11 @@
     'route' =>'#',
     ])
 
-    <section class="bs-validation">
+    <section class="bs-validation row">
         <div class="col-md-8 col-12">
             <div class="card">
                 <div class="card-body">
-                    <form class="needs-validation" method="post" action="{{ route('backend.site_config.quick-page.store') }}"
+                    <form class="needs-validation" method="post" action="{{ route('backend.site_config.info') }}"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="mb-1">
@@ -51,8 +51,8 @@
                         </div>
                         <div class="mb-1">
                             <label for="logo" class="form-label">Logo</label>
-                            <input name="logo" class="form-control" type="file"  id="logo" required=""
-                            placeholder="Company logo"   onchange="readURL(this);">
+                            <input name="logo" class="form-control" type="file"  id="imgInp" 
+                            placeholder="Company logo"  >
                             <div class="invalid-feedback">Please logo.</div>
                             <div class="invalid-feedback">{{ $errors->first('address') }}</div>
 
@@ -77,69 +77,32 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Uploaded Logo</h4>
+                </div>
+                <img class="img-fluid" src="{{ asset($info->logo??'-') }}" alt="companey logo" style="height: 200px">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Current Logo</h4>
+                </div>
+                <img id="blah" src="#" alt="your image"  style="height: 200px"/>
+            </div>
+        </div>
     </section>
    
 
-    {{-- <div class="col-sm-3">
-        <div class="widget-box first">
-            <div class="widget-header">
-                <h4 class="widget-title">Site Logo</h4>
-
-                <div class="widget-toolbar">
-                    <a href="#" data-action="collapse">
-                        <i class="ace-icon fa fa-chevron-up"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="widget-body"
-                 style="display:flex; align-items: center; justify-content: center; height:100px;">
-                <div class="widget-main">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <img src="{{asset($info->logo)}}" class="img-responsive center-block" alt="logo"
-                                 width="100" height="100">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="widget-box">
-            <div class="widget-header">
-                <h4 class="widget-title">Current Logo</h4>
-
-                <div class="widget-toolbar">
-                    <a href="#" data-action="collapse">
-                        <i class="ace-icon fa fa-chevron-up"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="widget-body"
-                 style="display:flex; align-items: center; justify-content: center; height:100px;">
-                <div class="widget-main">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <img id="current" src="" width="100" height="100" class="img-responsive center-block"
-                                 alt="logo">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.col -->
-    </div> --}}
+   
 @endsection
 
 @push('js')
     <script>
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#current')
-                        .attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
             }
         }
     </script>
