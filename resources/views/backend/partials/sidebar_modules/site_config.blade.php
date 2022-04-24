@@ -1,4 +1,4 @@
-     
+
         <li class="nav-item {{ strpos($routeName, 'backend.site_config') === 0 ? 'sidebar-group-active open' : ''}}">
             <a class="d-flex align-items-center" href="#">
             <i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice"> Site Config</span></a>

@@ -51,21 +51,26 @@
             </div>
             <img class="img-fluid" src="{{ asset($slider->image) }}" alt="Card image cap" style="height: 200px">
         </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Current Logo</h4>
+            </div>
+            <img id="blah" src="#" alt="your image"  style="height: 200px"/>
+        </div>
     </div>
+
+
+
 </section>
 @endsection
 
 @push('js')
-<script>
-    function readURL(input) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#current')
-                        .attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
+    <script>
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                blah.src = URL.createObjectURL(file)
             }
         }
-</script>
+    </script>
 @endpush

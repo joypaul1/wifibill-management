@@ -46,12 +46,12 @@ Route::group(['prefix' => '/quick-page'], function (){
 
 // Offer page
 Route::group(['prefix' => '/offer'], function (){
-    Route::get('/','OfferController@index')->name('backend.site_config.offer.index');
-    Route::get('/create','OfferController@create')->name('backend.site_config.offer.create');
-    Route::get('/edit/{id}','OfferController@edit')->name('backend.site_config.offer.edit');
-    Route::post('/store','OfferController@store')->name('backend.site_config.offer.store');
-    Route::get('/delete/{offer}','OfferController@destroy')->name('backend.site_config.offer.destroy');
-    Route::post('/update/{offer}','OfferController@update')->name('backend.site_config.offer.update');
+    Route::get('/','OfferController@index')->name('backend.offer.index');
+    Route::get('/create','OfferController@create')->name('backend.offer.create');
+    Route::get('/edit/{id}','OfferController@edit')->name('backend.offer.edit');
+    Route::post('/store','OfferController@store')->name('backend.offer.store');
+    Route::get('/delete/{offer}','OfferController@destroy')->name('backend.offer.destroy');
+    Route::post('/update/{offer}','OfferController@update')->name('backend.offer.update');
 
 });
 

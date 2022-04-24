@@ -11,7 +11,7 @@ $(function () {
   ('use strict');
 
   var dtUserTable = $('.user-list-table'),
-    newUserSidebar = $('.new-user-modal'),
+   newUserSidebar = $('.new-user-modal'),
     newUserForm = $('.add-new-user'),
     select = $('.select2'),
     dtContact = $('.dt-contact'),

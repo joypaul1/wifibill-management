@@ -18,7 +18,7 @@
     @include('backend.components.page_header')
     <div class="col-sm-9">
         <form class="form-horizontal" method="post"
-              action="{{route('backend.site_config.offer.update',$offer->id)}}"
+              action="{{route('backend.offer.update',$offer->id)}}"
               role="form" enctype="multipart/form-data">
         @csrf
 
@@ -44,7 +44,7 @@
                 <div class="col-sm-4">
                     <input name="position"
                            type="text"
-                           value="{{ $offer->position }}" 
+                           value="{{ $offer->position }}"
                            id="position"
                            class="form-control"
                            >
@@ -61,7 +61,7 @@
                 <div class="col-sm-offset-2 col-sm-4">
                     <button class="btn btn-sm btn-success submit"><i class="fa fa-save"></i> Update</button>
 
-                    <a href="{{ route('backend.site_config.offer.index') }}" class="btn btn-sm btn-gray"> <i
+                    <a href="{{ route('backend.offer.index') }}" class="btn btn-sm btn-gray"> <i
                             class="fa fa-refresh"></i>
                         Cancel</a>
                 </div>

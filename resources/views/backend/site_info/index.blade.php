@@ -51,7 +51,7 @@
                         </div>
                         <div class="mb-1">
                             <label for="logo" class="form-label">Logo</label>
-                            <input name="logo" class="form-control" type="file"  id="imgInp" 
+                            <input name="logo" class="form-control" type="file"  id="imgInp"
                             placeholder="Company logo"  >
                             <div class="invalid-feedback">Please logo.</div>
                             <div class="invalid-feedback">{{ $errors->first('address') }}</div>
@@ -70,9 +70,9 @@
                             <a href="{{route('backend.site_config.quick-page.index')}}" class="btn btn-warning btn-md"> <i
                                     class="fa fa-refresh"></i>
                                 Cancel</a>
-    
+
                         </div>
-    
+
                     </form>
                 </div>
             </div>
@@ -92,9 +92,9 @@
             </div>
         </div>
     </section>
-   
 
-   
+
+
 @endsection
 
 @push('js')

@@ -1,118 +1,161 @@
 @extends('backend.layouts.master')
 @section('title', 'Add Offer')
-@section('page-header')
-    <i class="fa fa-info"></i> Add Offer Image
-@endsection
-@push('css')
-    <style>
-        @media only screen and (min-width: 768px) {
-            .widget-box.first {
-                margin-top: 0 !important;
-            }
-        }
-    </style>
-@endpush
+
 
 @section('content')
-    @include('backend.components.page_header', [
-       'fa' => 'fa fa-list',
-       'name' => 'Offer List',
-       'route' =>route('backend.site_config.offer.index'),
-    ])
+@include('backend.components.page_header', [
+'fa' => 'list',
+'name' => 'Offer List',
+'header_name' => 'Offer Create',
+'route' =>route('backend.offer.index'),
+])
 
-    <div class="col-sm-9">
-        <form class="form-horizontal" method="post" action="{{route('backend.site_config.offer.store')}}"
-              role="form"
-              enctype="multipart/form-data">
-        @csrf
+    <section class="bs-validation">
+        <div class="col-md-6 col-12">
+            <div class="card">
 
+                <div class="card-body">
+                    <form class="needs-validation" method="post" action="{{route('backend.offer.store')}}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-1">
+                            <label for="customFile1" class="form-label">Image</label>
+                            <input name="image" class="form-control" type="file" id="customFile1" required="">
+                            <div class="invalid-feedback">Please enter Image.</div>
+                            <div class="invalid-feedback">{{ $errors->first('image') }}</div>
 
-            <!-- Image -->
-            <div class="form-group">
-                <label class="col-sm-2 bolder" for="image">Image
-                </label>
-                <div class="col-sm-4">
-                    <input name="image"
-                           type="file"
-                           id="image"
-                           class="form-control"
-                           onchange="readURL(this);">
-                    <strong class="red">{{ $errors->first('image') }}</strong>
-                    @if($errors->first('image'))
-                        <br>
-                    @endif
-                    {{-- <strong class="red">Minimum 150x33 pixels</strong> --}}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 bolder" for="image">Position
-                </label>
-                <div class="col-sm-4">
-                    <input name="position"
-                           type="text"
-                           id="position"
-                           class="form-control"
-                           >
-                    <strong class="red">{{ $errors->first('position') }}</strong>
-                    @if($errors->first('position'))
-                        <br>
-                    @endif
-                    {{-- <strong class="red">Minimum 150x33 pixels</strong> --}}
-                </div>
-            </div>
-            
-
-            <!-- Buttons -->
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-4">
-                    <button class="btn btn-sm btn-success submit create-button"><i class="fa fa-save"></i> Add
-                    </button>
-
-                    <a href="{{route('backend.site_config.slider.index')}}" class="btn btn-sm btn-gray"> <i
-                            class="fa fa-refresh"></i>
-                        Cancel</a>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="col-sm-3">
-        <div class="widget-box first">
-            <div class="widget-header">
-                <h4 class="widget-title">Current Image</h4>
-
-                <div class="widget-toolbar">
-                    <a href="#" data-action="collapse">
-                        <i class="ace-icon fa fa-chevron-up"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="widget-body"
-                 style="display:flex; align-items: center; justify-content: center; height:100px;">
-                <div class="widget-main">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <img id="current" src="" width="100" height="100" class="img-responsive center-block"
-                                 alt="image">
                         </div>
-                    </div>
+                        <div class="mb-1">
+                            <label class="form-label" for="basic-addon-name">Positon</label>
+                            <input name="position" type="text" id="basic-addon-name" class="form-control" placeholder="Name"
+                                aria-label="Name" aria-describedby="basic-addon-name" required="">
+                            <div class="invalid-feedback">Please enter Position.</div>
+                            <div class="invalid-feedback">{{ $errors->first('position') }}</div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{route('backend.site_config.slider.index')}}" class="btn btn-warning btn-md"> <i
+                                    class="fa fa-refresh"></i>
+                                Cancel</a>
+
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+        {{-- <div class="col-md-4 col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Uploaded Logo</h4>
+                </div>
+                <img class="img-fluid" src="{{ asset($info->logo??'-') }}" alt="companey logo" style="height: 200px">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Current Logo</h4>
+                </div>
+                <img id="blah" src="#" alt="your image"  style="height: 200px"/>
+            </div>
+        </div> --}}
+    </section>
+    <section class="form-control-repeater">
+        <div class="row">
+          <!-- Invoice repeater -->
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Invoice</h4>
+              </div>
+              <div class="card-body">
+                <form action="#" class="invoice-repeater">
+                  <div data-repeater-list="invoice">
+                    <div data-repeater-item>
+                      <div class="row d-flex align-items-end">
+                        <div class="col-md-4 col-12">
+                          <div class="mb-1">
+                            <label class="form-label" for="itemname">Item Name</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="itemname"
+                              aria-describedby="itemname"
+                              placeholder="Vuexy Admin Template"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-2 col-12">
+                          <div class="mb-1">
+                            <label class="form-label" for="itemcost">Cost</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="itemcost"
+                              aria-describedby="itemcost"
+                              placeholder="32"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-2 col-12">
+                          <div class="mb-1">
+                            <label class="form-label" for="itemquantity">Quantity</label>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="itemquantity"
+                              aria-describedby="itemquantity"
+                              placeholder="1"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-2 col-12">
+                          <div class="mb-1">
+                            <label class="form-label" for="staticprice">Price</label>
+                            <input type="text" readonly class="form-control-plaintext" id="staticprice" value="$32" />
+                          </div>
+                        </div>
+
+                        <div class="col-md-2 col-12 mb-50">
+                          <div class="mb-1">
+                            <button class="btn btn-outline-danger text-nowrap px-1" data-repeater-delete type="button">
+                              <i data-feather="x" class="me-25"></i>
+                              <span>Delete</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <button class="btn btn-icon btn-primary" type="button" data-repeater-create>
+                        <i data-feather="plus" class="me-25"></i>
+                        <span>Add New</span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /Invoice repeater -->
+        </div>
+      </section>
 @endsection
 
 @push('js')
+<script src="{{ asset(('assets/app-assets/js/scripts/forms/form-repeater.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js')) }}"></script>
     <script>
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#current')
-                        .attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+        // imgInp.onchange = evt => {
+        //     const [file] = imgInp.files
+        //     if (file) {
+        //         blah.src = URL.createObjectURL(file)
+        //     }
+        // }
     </script>
 @endpush

@@ -37,13 +37,13 @@
                                             <a href="{{ route('backend.site_config.quick-page.edit', $page->id) }}"
                                                class="btn btn-xs btn-info"
                                                title="Edit">
-                                                <i class="ace-icon fa fa-pencil"></i>
+                                               <i data-feather='edit'></i>
                                             </a>
                     
                                             <button type="button" class="btn btn-xs btn-danger"
                                                     onclick="delete_check({{$page->id}})"
                                                     title="Delete">
-                                                <i class="ace-icon fa fa-trash-o"></i>
+                                                    <i data-feather='trash-2'></i>
                                             </button>
                                         </div>
                                         <form action="{{ route('backend.site_config.quick-page.destroy', $page->id)}}"

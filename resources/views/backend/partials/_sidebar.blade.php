@@ -11,11 +11,6 @@
         {{-- Product --}}
         {{-- @include('backend.partials.sidebar_modules.product') --}}
 
-         {{-- Customer --}}
-        {{-- @include('backend.partials.sidebar_modules.customer') --}}
-
-        {{-- Site Config --}}
-        {{-- @include('backend.partials.sidebar_modules.site_config') --}}
 
 
 @php
@@ -28,6 +23,14 @@ $routeName = request()->route()->getName();
     <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
         @include('backend.partials.sidebar_modules.dashboard')
+
+        {{-- package --}}
+        @include('backend.partials.sidebar_modules.offer')
+
+        {{-- Customer --}}
+        @include('backend.partials.sidebar_modules.user')
+
+        {{-- Site Config --}}
         @include('backend.partials.sidebar_modules.site_config')
 
         <li class=" nav-item sidebar-group-actives opens"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Invoice">Invoice</span></a>

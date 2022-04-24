@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class CustomerController extends Controller
 {
@@ -12,8 +14,17 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->ajax()){
+
+            // return $users = User::select(['id','name', 'mobile', 'image','email','created_at','updated_at'])->get();
+            $users = User::select(['id as status','name as full_name', 'mobile as userView ',  'mobile as username',  'image as billing','email as role','created_at as current_plan','updated_at as current_plan'])->get();
+
+             return response()->json( ['data' => $users]);
+
+            return Datatables::of($users)->make();
+        }
         return view('backend.customer.index');
     }
 

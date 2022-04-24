@@ -296,7 +296,6 @@
 
     <!-- BEGIN: Page JS-->
     {{-- <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script> --}}
-    {{-- <script src="{{ asset('assets') }}/js/summernote.min.js"></script> --}}
     <script src="{{ asset('assets') }}/js/sweetalert2.all.min.js"></script>
     @stack('js')
     <!-- END: Page JS-->
