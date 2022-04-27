@@ -14,15 +14,16 @@ public function authorize()
     public function rules()
     {
         return [
+            'name' => 'required|string|unique:offers',
             'position' => 'required|integer|unique:offers',
-            'image' => 'required|image|dimensions:min_width=100,min_height=100',
+            'image' => 'nullable|dimensions:min_width=100,min_height=100',
         ];
     }
 
     public function messages()
     {
         return [
-            'image.required'    => "Image is required.",
+            'image.nullable'    => "Image is required.",
             'position.required' => "position is required.",
             'position.integer'  => 'position must be Number.',
             'position.unique'   => 'position has already been taken.',

@@ -7,6 +7,7 @@ use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Http\Requests\Offer\OfferRequest;
 use App\Http\Requests\Offer\OfferUpdateRequest;
+use Illuminate\Support\Facades\DB;
 use NabilAnam\SimpleUpload\SimpleUpload;
 
 class OfferController extends Controller
@@ -18,7 +19,7 @@ class OfferController extends Controller
      */
     public function index()
     {
-        $offers = Offer::paginate(10);
+         $offers = Offer::paginate(10);
         return view('backend.offer.index',compact('offers'));
 
     }
@@ -41,14 +42,30 @@ class OfferController extends Controller
      */
     public function store(OfferRequest $request)
     {
-        $all = $request->all();
-        $all['image'] = (new SimpleUpload)
-            ->file($request->image)
-            ->dirName('offers')
-            ->save();
 
-        Offer::create($all);
-        return back()->with('message','Offer image Inserted Successfully');
+
+        try {
+            DB::beginTransaction();
+            $all = $request->all();
+            if($request->image){
+                $all['image'] = (new SimpleUpload)
+                ->file($request->image)
+                ->dirName('offers')
+                ->save();
+            }
+
+             $offer = Offer::create($all);
+            foreach ($request->invoice as $key => $values) {
+                foreach ($values as $key => $value) {
+                    $offer->serials()->create(['name' => ($value)]);
+                }
+            }
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return back()->with('error',$ex->getMessage());
+        }
+        return redirect()->to('sadmin/offer')->with('message','Offer Inserted Successfully');
     }
 
     /**
@@ -70,7 +87,7 @@ class OfferController extends Controller
      */
     public function edit($id)
     {
-       $offer =Offer::find($id);
+       $offer =Offer::with('serials')->find($id);
        return view('backend.offer.edit',compact('offer'));
     }
 
@@ -83,14 +100,35 @@ class OfferController extends Controller
      */
     public function update(OfferUpdateRequest $request,Offer $offer)
     {
-        $all = $request->all();
-        $all['image'] = (new SimpleUpload)
-            ->file($request->image)
-            ->dirName('banners')
-            ->deleteIfExists($offer->image)
-            ->save();
+        try {
+            DB::beginTransaction();
+             $all = $request->except('_token', 'item');
+            if($request->image){
+            $all['image'] = (new SimpleUpload)
+                ->file($request->image)
+                ->dirName('banners')
+                ->deleteIfExists($offer->image)
+                ->save();
+            }
 
-        $all = $offer->update($all);
+            $offer->update($all);
+
+            foreach ($offer->serials()->get() as  $key  => $value) {
+                if(in_array( $value->id, array_keys ($request->item))){
+                    $value->update(['name' =>$request->item[$value->id]]);
+                }else{
+                    $value->delete();
+                }
+            }
+
+            foreach ($request->new_item as $key => $value) {
+                    $offer->serials()->create(['name' => ($value)]);
+            }
+            DB::commit();
+            } catch (\Exception $ex) {
+                DB::rollback();
+                return back()->with('error',$ex->getMessage());
+            }
         return back()->with('message', 'Offer Update Successfully!');
     }
 

@@ -13,10 +13,13 @@ class OfferUpdateRequest extends FormRequest
 
     public function rules()
     {
+        //
         return [
-            'position' => 'required|integer|unique:banners',
+            'position' => 'required|integer|unique:offers,position, '.$this->offer->id,
+            'name' => 'required|string|unique:offers,name, '.$this->offer->id,
             // 'image' => 'nullable|image|dimensions:min_width=100,min_height=100',
         ];
+        // dd($this->offer->id);
     }
 
     public function messages()

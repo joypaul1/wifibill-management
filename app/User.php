@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Offer;
 use App\Traits\AutoTimeStamp;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','offer_id', 'status', 'mobile', 'permanent_address', 'present_address'
     ];
 
     /**
@@ -38,4 +39,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
+
+
 }

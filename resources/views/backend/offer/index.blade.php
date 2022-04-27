@@ -22,6 +22,8 @@
                                 <tr>
                                     <th>SL</th>
                                     <th>Name</th>
+                                    <th>Rate</th>
+                                    <th>Position</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -30,11 +32,17 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        <img src="{{ asset($offer->image) }}" height="30" width="120" alt="No Image">
+                                        {{ $offer->name }}
+                                    </td>
+                                    <td>
+                                        {{ $offer->rate }}
+                                    </td>
+                                    <td>
+                                        {{ $offer->position }}
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-mini btn-corner">
-                                            <a href="{{ route('backend.site_config.offer.edit', $offer->id) }}"
+                                            <a href="{{ route('backend.offer.edit', $offer->id) }}"
                                                 class="btn btn-xs btn-info" title="Edit"> <i data-feather="edit"></i>
                                             </a>
 
@@ -43,7 +51,7 @@
                                                 <i data-feather='trash-2'></i>
                                             </button>
                                         </div>
-                                        <form action="{{ route('backend.site_config.offer.destroy', $offer->id)}}"
+                                        <form action="{{ route('backend.offer.destroy', $offer->id)}}"
                                             id="deleteCheck_{{ $offer->id }}" method="GET">
                                             @csrf
                                         </form>

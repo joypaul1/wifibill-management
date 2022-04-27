@@ -93,10 +93,10 @@
       <table class="table" id="user-list-table">
         <thead class="table-light">
           <tr>
-            <th></th>
+            <th>ID</th>
             <th>Name</th>
-            <th>Role</th>
-            <th>Plan</th>
+            <th>Mobile</th>
+            <th>Package</th>
             <th>Billing</th>
             <th>Status</th>
             <th>Actions</th>
@@ -170,48 +170,18 @@
               <label class="form-label" for="country">Country</label>
               <select id="country" class="select2 form-select">
                 <option value="Australia">USA</option>
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="Belarus">Belarus</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Canada">Canada</option>
-                <option value="China">China</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="India">India</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Israel">Israel</option>
-                <option value="Italy">Italy</option>
-                <option value="Japan">Japan</option>
-                <option value="Korea">Korea, Republic of</option>
-                <option value="Mexico">Mexico</option>
-                <option value="Philippines">Philippines</option>
-                <option value="Russia">Russian Federation</option>
-                <option value="South Africa">South Africa</option>
-                <option value="Thailand">Thailand</option>
-                <option value="Turkey">Turkey</option>
-                <option value="Ukraine">Ukraine</option>
-                <option value="United Arab Emirates">United Arab Emirates</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States">United States</option>
               </select>
             </div>
             <div class="mb-1">
               <label class="form-label" for="user-role">User Role</label>
               <select id="user-role" class="select2 form-select">
                 <option value="subscriber">Subscriber</option>
-                <option value="editor">Editor</option>
-                <option value="maintainer">Maintainer</option>
-                <option value="author">Author</option>
-                <option value="admin">Admin</option>
               </select>
             </div>
             <div class="mb-2">
-              <label class="form-label" for="user-plan">Select Plan</label>
-              <select id="user-plan" class="select2 form-select">
+              <label class="form-label" for="user-plan">Select Package</label>
+              <select id="user-plan" name="offer_id" class="select2 form-select">
                 <option value="basic">Basic</option>
-                <option value="enterprise">Enterprise</option>
-                <option value="company">Company</option>
-                <option value="team">Team</option>
               </select>
             </div>
             <button type="submit" class="btn btn-primary me-1 data-submit">Submit</button>
@@ -250,20 +220,27 @@
 
 <script>
     $(function () {
-        var userView;
+        var userView = window.location.origin+ '/userView';
+        var assetPath =window.location.origin ;
+
         var statusObj =[];
         var dtUserTable = $('#user-list-table');
         if (dtUserTable.length) {
             dtUserTable.DataTable({
-            ajax: '/sadmin/customer', // JSON file to add data
+            // ajax: '/sadmin/customer',
+            ajax: {
+                "url": "/sadmin/customer",
+                "type": "GET",
+                "datatype": "json"
+            },// JSON file to add data
             columns: [
                 // columns according to JSON
-                { data: '' },
-                { data: 'name' },
-                { data: 'role' },
-                { data: 'current_plan' },
+                { data: 'id' },
+                { data: 'name', name:'name' },
+                { data: 'mobile' },
+                { data: 'offer.name' },
                 { data: 'billing' },
-                { data: 'status' },
+                { data:'status'},
                 { data: '' }
             ],
             columnDefs: [
@@ -282,19 +259,20 @@
                 targets: 1,
                 responsivePriority: 4,
                 render: function (data, type, full, meta) {
-                    var $name = full['full_name'],
-                    $email = full['email'],
-                    $image = full['avatar'];
+                    var $name = full['name'],
+                    $ip_id = full['ip_id'],
+                    $image = full['image'];
+
                     if ($image) {
                     // For Avatar image
                     var $output =
-                        '<img src="' + assetPath + 'images/avatars/' + $image + '" alt="Avatar" height="32" width="32">';
+                        '<img src="' + assetPath + '/' + $image + '" alt="Avatar" height="32" width="32">';
                     } else {
                     // For Avatar badge
                     var stateNum = Math.floor(Math.random() * 6) + 1;
                     var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
                     var $state = states[stateNum],
-                        $name = full['full_name'],
+                        $name = full['name'],
                         $initials = $name.match(/\b\w/g) || [];
                     $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
                     $output = '<span class="avatar-content">' + $initials + '</span>';
@@ -304,21 +282,11 @@
                     var $row_output =
                     '<div class="d-flex justify-content-left align-items-center">' +
                     '<div class="avatar-wrapper">' +
-                    '<div class="avatar ' +
-                    colorClass +
-                    ' me-1">' +
-                    $output +
-                    '</div>' +
+                    '<div class="avatar ' +colorClass + ' me-1">' + $output +'</div>' +
                     '</div>' +
                     '<div class="d-flex flex-column">' +
-                    '<a href="' +
-                    userView +
-                    '" class="user_name text-truncate text-body"><span class="fw-bolder">' +
-                    $name +
-                    '</span></a>' +
-                    '<small class="emp_post text-muted">' +
-                    $email +
-                    '</small>' +
+                    '<a href="#" class="user_name text-truncate text-body"><span class="fw-bolder">' +$name +'</span></a>' +
+                    '<small class="emp_post text-muted">' + $ip_id +'</small>' +
                     '</div>' +
                     '</div>';
                     return $row_output;
@@ -328,15 +296,17 @@
                 // User Role
                 targets: 2,
                 render: function (data, type, full, meta) {
-                    var $role = full['role'];
-                    var roleBadgeObj = {
-                    Subscriber: feather.icons['user'].toSvg({ class: 'font-medium-3 text-primary me-50' }),
-                    Author: feather.icons['settings'].toSvg({ class: 'font-medium-3 text-warning me-50' }),
-                    Maintainer: feather.icons['database'].toSvg({ class: 'font-medium-3 text-success me-50' }),
-                    Editor: feather.icons['edit-2'].toSvg({ class: 'font-medium-3 text-info me-50' }),
-                    Admin: feather.icons['slack'].toSvg({ class: 'font-medium-3 text-danger me-50' })
-                    };
-                    return "<span class='text-truncate align-middle'>" + roleBadgeObj[$role] + $role + '</span>';
+                    // var $role = full['moble'];
+                    // var roleBadgeObj = {
+                    // Subscriber: feather.icons['user'].toSvg({ class: 'font-medium-3 text-primary me-50' }),
+                    // Author: feather.icons['settings'].toSvg({ class: 'font-medium-3 text-warning me-50' }),
+                    // Maintainer: feather.icons['database'].toSvg({ class: 'font-medium-3 text-success me-50' }),
+                    // Editor: feather.icons['edit-2'].toSvg({ class: 'font-medium-3 text-info me-50' }),
+                    // Admin: feather.icons['slack'].toSvg({ class: 'font-medium-3 text-danger me-50' })
+                    // };
+                    // console.log(roleBadgeObj);
+                    // return "<span class='text-truncate align-middle'>" + roleBadgeObj[$role] + $role + '</span>';
+                    return "<span class='text-truncate align-middle'>" + full['mobile'] + '</span>';
                 }
                 },
                 {
@@ -348,18 +318,23 @@
                 }
                 },
                 {
+
                 // User Status
                 targets: 5,
                 render: function (data, type, full, meta) {
                     var $status = full['status'];
-                    // console.log( $status,'object');
-                    // return (
-                    // '<span class="badge rounded-pill ' +
-                    // statusObj[$status].class +
-                    // '" text-capitalized>' +
-                    // statusObj[$status].title +
-                    // '</span>'
-                    // );
+
+                    if($status == 1){
+                      var $className = 'badge rounded-pill badge-light-success me-1 text-capitalized' ;
+                      var valueName = 'Active';
+                    }else{
+                      var $className = 'badge rounded-pill badge-light-warning  me-1 text-capitalized' ;
+                      var valueName = 'Deactive';
+                    }
+
+                    return (
+                    '<span class="' +$className+'">' + valueName+'</span>'
+                    );
                 }
                 },
                 {
@@ -374,9 +349,7 @@
                     feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
                     '</a>' +
                     '<div class="dropdown-menu dropdown-menu-end">' +
-                    '<a href="' +
-                    userView +
-                    '" class="dropdown-item">' +
+                    '<a href="' +userView + '" class="dropdown-item">' +
                     feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) +
                     'Details</a>' +
                     '<a href="javascript:;" class="dropdown-item delete-record">' +
@@ -467,7 +440,7 @@
                 display: $.fn.dataTable.Responsive.display.modal({
                     header: function (row) {
                     var data = row.data();
-                    return 'Details of ' + data['full_name'];
+                    return 'Details of ' + data['name'];
                     }
                 }),
                 type: 'column',
@@ -524,6 +497,7 @@
                 //         select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
                 //     });
                 // });
+
                 // Adding plan filter once table initialized
                 this.api()
                 .columns(3)
@@ -538,7 +512,6 @@
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
                         column.search(val ? '^' + val + '$' : '', true, false).draw();
                     });
-
                     column
                     .data()
                     .unique()
@@ -547,11 +520,13 @@
                         select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
                     });
                 });
+
                 // Adding status filter once table initialized
                 this.api()
                 .columns(5)
                 .every(function () {
                     var column = this;
+
                     var label = $('<label class="form-label" for="FilterTransaction">Status</label>').appendTo('.user_status');
                     var select = $(
                     '<select id="FilterTransaction" class="form-select text-capitalize mb-md-0 mb-2xx"><option value=""> Select Status </option></select>'
@@ -559,7 +534,12 @@
                     .appendTo('.user_status')
                     .on('change', function () {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                        if (val == true) {
+                           var $statusValue = 'Active';
+                        }else{
+                            var $statusValue = 'Deactive';
+                        }
+                        column.search(val ? '^' + $statusValue  + '$' : '', true, false).draw();
                     });
 
                     column
@@ -567,13 +547,12 @@
                     .unique()
                     .sort()
                     .each(function (d, j) {
-                        // select.append(
-                        // '<option value="' +
-                        //     statusObj[d].title +
-                        //     '" class="text-capitalize">' +
-                        //     statusObj[d].title +
-                        //     '</option>'
-                        // );
+                        if (j == true) {
+                            var $statusValue = 'Active';
+                        }else{
+                            var $statusValue = 'Deactive';
+                        }
+                        select.append('<option value="' + d + '" class="text-capitalize">' +  $statusValue + '</option>');
                     });
                 });
             }
