@@ -31,7 +31,7 @@ $routeName = request()->route()->getName();
         {{-- employee --}}
         @include('backend.partials.sidebar_modules.employee')
 
-        
+
         {{-- Site Config --}}
         @include('backend.partials.sidebar_modules.site_config')
 

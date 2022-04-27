@@ -25,7 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->string('present_address')->nullable();
             $table->string('permanent_address')->nullable();
             $table->string('nid')->nullable();
-            $table->string('dob')->nullable();
+            $table->date('dob')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

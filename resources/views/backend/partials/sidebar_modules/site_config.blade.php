@@ -15,6 +15,10 @@
                     <a class="d-flex align-items-center" href="{{ route('backend.site_config.banner.index') }}"><i data-feather="circle"></i>
                     <span class="menu-item text-truncate" data-i18n="List"> Banner</span></a>
                 </li> --}}
+                <li class="{{ $routeName === 'backend.site_config.area.index' ? 'active' : ''}}">
+                    <a class="d-flex align-items-center" href="{{ route('backend.site_config.area.index') }}"><i data-feather="circle"></i>
+                    <span class="menu-item text-truncate" data-i18n="List"> Area</span></a>
+                </li>
                 <li class="{{ $routeName === 'backend.site_config.quick-page.index' ? 'active' : ''}}">
                     <a class="d-flex align-items-center" href="{{ route('backend.site_config.quick-page.index') }}"><i data-feather="circle"></i>
                     <span class="menu-item text-truncate" data-i18n="List"> Quick Page</span></a>

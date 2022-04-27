@@ -22,6 +22,19 @@ Route::group(['prefix' => '/banner'], function (){
     Route::get('/delete/{banner}','BannerController@destroy')->name('backend.site_config.banner.destroy');
     Route::post('/update/{banner}','BannerController@update')->name('backend.site_config.banner.update');
 });
+
+//area
+
+Route::group(['prefix' => '/area'], function (){
+	 Route::get('/','AreaController@index')->name('backend.site_config.area.index');
+	 Route::get('/create','AreaController@create')->name('backend.site_config.area.create');
+	 Route::get('/edit/{id}','AreaController@edit')->name('backend.site_config.area.edit');
+    Route::post('/store','AreaController@store')->name('backend.site_config.area.store');
+    Route::get('/delete/{area}','AreaController@destroy')->name('backend.site_config.area.destroy');
+    Route::post('/update/{area}','AreaController@update')->name('backend.site_config.area.update');
+});
+
+
 // slider
 Route::group(['prefix' => '/slider'], function (){
     Route::get('/','SliderController@index')->name('backend.site_config.slider.index');

@@ -229,7 +229,7 @@
             dtUserTable.DataTable({
             // ajax: '/sadmin/customer',
             ajax: {
-                "url": "/sadmin/customer",
+                "url": "/sadmin/employee",
                 "type": "GET",
                 "datatype": "json"
             },// JSON file to add data

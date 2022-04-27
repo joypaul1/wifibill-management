@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Employee;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Area\StoreRequest;
+use App\Http\Requests\Area\UpdateRequest;
+use App\Models\Area;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        // if($request->ajax()){
-
-            $users = Employee::select(['id','name', 'image', 'present_address','email','mobile', 'status',])->get();
-
-             return response()->json( ['data' => $users]);
-
-            // return Datatables::of($users)->make();
-        // }
-        return view('backend.customer.index');
+        $areas = Area::paginate(10);
+         return view('backend.area.index',compact('areas'));
     }
 
     /**
@@ -33,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.area.create');
     }
 
     /**
@@ -42,9 +37,12 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $all =($request->all());
+        Area::create($all);
+
+        return redirect()->to('sadmin/area')->with('message', 'Area Added Successfully!');
     }
 
     /**
@@ -53,9 +51,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('backend.customer.show');
+        //
     }
 
     /**
@@ -66,7 +64,10 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $area = Area::find($id);
+         // dd($area);
+        return view('backend.area.edit',compact('area'));
+
     }
 
     /**
@@ -76,9 +77,12 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Area $area)
     {
-        //
+        $all = $request->all();
+
+        $all = $area->update($all);
+        return redirect()->to('sadmin/area')->with('message', 'Area Update Successfully!');
     }
 
     /**
@@ -87,8 +91,11 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Area $area)
     {
-        //
+        $area->delete();
+
+        return back()->with('message', 'Area Deleted Successfully!');
+
     }
 }
