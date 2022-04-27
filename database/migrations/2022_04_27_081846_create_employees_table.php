@@ -15,6 +15,19 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('image')->default('defaults/user.png');
+            $table->string('mobile')->unique();
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->boolean('status')->default(1);
+            $table->string('present_address')->nullable();
+            $table->string('permanent_address')->nullable();
+            $table->string('nid')->nullable();
+            $table->string('dob')->nullable();
+            $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -8,66 +8,88 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
-        $categories = Employee::latest()->paginate(5);
+        if($request->ajax()){
 
-        return view('backend.categories.index', compact('categories'));
+            $users = Employee::select(['id','name', 'image', 'ip_id','offer_id',
+            'mobile',  'mobile as username',  'image as billing', 'status','email as role','created_at as current_plan','updated_at as current_plan'])->get();
+
+             return response()->json( ['data' => $users]);
+
+            // return Datatables::of($users)->make();
+        }
+        return view('backend.customer.index');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
-        return view('backend.categories.create');
+        //
     }
 
-    public function store(StoreRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $all = $request->all();
-        $all['display_on_home'] = $request->display_on_home === 'on';
-        $all['image'] = (new SimpleUpload)->file($request->image)
-            ->dirName('categories')
-            ->save();
-
-        Category::create($all);
-
-        return redirect()
-            ->route('backend.product.categories.index')
-            ->with('message', 'Category created successfully!');
+        //
     }
 
-    public function edit(Category $category)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
     {
-        return view('backend.categories.edit', compact('category'));
+        return view('backend.customer.show');
     }
 
-    public function update(UpdateRequest $request, Category $category)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        $all = $request->all();
-        $all['display_on_home'] = $request->display_on_home == 'on';
-        $all['image'] = (new SimpleUpload)->file($request->image)
-            ->dirName('categories')
-            ->deleteIfExists($category->image)
-            ->save();
-
-        $category->update($all);
-
-        return redirect()
-            ->route('backend.product.categories.index')
-            ->with('message', 'Category updated successfully!');
+        //
     }
 
-    public function destroy(Category $category)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        try {
-            $category->delete();
-        } catch (\Exception $e){
-            return redirect()
-                ->route('backend.product.categories.index')
-                ->with('error', 'Category is referenced in another place!');
-        }
+        //
+    }
 
-        return redirect()
-            ->route('backend.product.categories.index')
-            ->with('message', 'Category deleted successfully!');
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
