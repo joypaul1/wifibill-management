@@ -13,7 +13,7 @@ class AddCreatedByAndUpdatedBy extends Migration
      */
     public function up()
     {
-        //
+        
     }
 
     /**

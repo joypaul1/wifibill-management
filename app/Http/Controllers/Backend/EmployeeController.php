@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Employee;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use NabilAnam\SimpleUpload\SimpleUpload;
 
 class EmployeeController extends Controller
 {
@@ -15,15 +18,11 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        // if($request->ajax()){
-
-            $users = Employee::select(['id','name', 'image', 'present_address','email','mobile', 'status',])->get();
-
-             return response()->json( ['data' => $users]);
-
-            // return Datatables::of($users)->make();
-        // }
-        return view('backend.customer.index');
+        if($request->ajax()){
+            $users = Employee::select(['id','name', 'image',  'present_address','email','mobile', 'status'])->with('areas.areaName')->get();
+           return  response()->json( ['data' => $users]);
+        }
+        return view('backend.employee.index');
     }
 
     /**
@@ -33,7 +32,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $areas =  Area::get();
+        return view('backend.employee.create', compact('areas'));
+
     }
 
     /**
@@ -44,7 +45,29 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all(), date('d F, Y'));
+        try {
+            DB::beginTransaction();
+            $all = $request->except('area_id', 'method', 'uri', 'id');
+            $all['image'] = (new SimpleUpload)
+            ->file($request->image)
+            ->dirName('employee')
+            ->save();
+            $employee= Employee::create( $all );
+
+
+            foreach ($request->area_id as $key => $area) {
+                $employee->areas()->create(['area_id' => $area]);
+            }
+            DB::commit();
+        }catch (\Exception $e) {
+             DB::rollBack();
+
+            return back()->with(['msg' => $e->getMessage()]);
+        }
+        return redirect()->to('sadmin/employee')->with(['msg' => 'Data Updated Successfully!']);
+
+
     }
 
     /**

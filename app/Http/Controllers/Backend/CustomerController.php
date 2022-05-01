@@ -19,7 +19,6 @@ class CustomerController extends Controller
         if($request->ajax()){
              $users = User::with('offer')->select(['id','name', 'image', 'ip_id','offer_id',
              'mobile',   'status','email'])->get();
-
              return response()->json( ['data' => $users]);
 
         }

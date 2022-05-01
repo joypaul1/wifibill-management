@@ -1,17 +1,22 @@
 @extends('backend.layouts.master')
 
-@section('title', 'User List')
+@section('title', 'Employee List')
 
 @push('css')
-  {{-- Page Css files --}}
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/forms/select/select2.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/css/base/plugins/forms/form-validation.css')) }}">
-@endpush
+{{-- Page Css files --}}
 
+<link rel="stylesheet"
+  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
+<link rel="stylesheet"
+  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
+<link rel="stylesheet"
+  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
+{{-- <link rel="stylesheet"
+  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}"> --}}
+  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/forms/select/select2.min.css')) }}">
+
+
+@endpush
 
 
 @section('content')
@@ -90,14 +95,14 @@
       </div>
     </div>
     <div class="card-datatable table-responsive pt-0">
-      <table class="table" id="user-list-table">
+      <table class="table" id="employee-list-table">
         <thead class="table-light">
           <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Mobile</th>
-            <th>Package</th>
-            <th>Billing</th>
+            <th>Email</th>
+            <th>Area</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -107,90 +112,7 @@
         </tbody>
       </table>
     </div>
-    <!-- Modal to add new user starts-->
-    <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
-      <div class="modal-dialog">
-        <form class="add-new-user modal-content pt-0">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-          <div class="modal-header mb-1">
-            <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
-          </div>
-          <div class="modal-body flex-grow-1">
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
-              <input
-                type="text"
-                class="form-control dt-full-name"
-                id="basic-icon-default-fullname"
-                placeholder="John Doe"
-                name="user-fullname"
-              />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-uname">Username</label>
-              <input
-                type="text"
-                id="basic-icon-default-uname"
-                class="form-control dt-uname"
-                placeholder="Web Developer"
-                name="user-name"
-              />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-email">Email</label>
-              <input
-                type="text"
-                id="basic-icon-default-email"
-                class="form-control dt-email"
-                placeholder="john.doe@example.com"
-                name="user-email"
-              />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-contact">Contact</label>
-              <input
-                type="text"
-                id="basic-icon-default-contact"
-                class="form-control dt-contact"
-                placeholder="+1 (609) 933-44-22"
-                name="user-contact"
-              />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-company">Company</label>
-              <input
-                type="text"
-                id="basic-icon-default-company"
-                class="form-control dt-contact"
-                placeholder="PIXINVENT"
-                name="user-company"
-              />
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="country">Country</label>
-              <select id="country" class="select2 form-select">
-                <option value="Australia">USA</option>
-              </select>
-            </div>
-            <div class="mb-1">
-              <label class="form-label" for="user-role">User Role</label>
-              <select id="user-role" class="select2 form-select">
-                <option value="subscriber">Subscriber</option>
-              </select>
-            </div>
-            <div class="mb-2">
-              <label class="form-label" for="user-plan">Select Package</label>
-              <select id="user-plan" name="offer_id" class="select2 form-select">
-                <option value="basic">Basic</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary me-1 data-submit">Submit</button>
-            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Modal to add new user Ends-->
+
   </div>
   <!-- list and filter end -->
 </section>
@@ -200,46 +122,48 @@
 
 
 @push('js')
-  {{-- Page js files --}}
-  <script src="{{ asset(('assets/app-assets/js/scripts/pages/app-user-list.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/forms/select/select2.full.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/jszip.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/forms/cleave/cleave.min.js')) }}"></script>
-  <script src="{{ asset(('assets/app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')) }}"></script>
+{{-- Page js files --}}
+<script src="{{ asset(('assets/app-assets/js/scripts/pages/app-user-list.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/forms/select/select2.full.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/js/scripts/forms/form-select2.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/jszip.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/vfs_fonts.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/buttons.html5.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/forms/cleave/cleave.min.js')) }}"></script>
+<script src="{{ asset(('assets/app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')) }}"></script>
+
+
 
 <script>
-    $(function () {
+  $(function () {
         var userView = window.location.origin+ '/userView';
         var assetPath =window.location.origin ;
 
         var statusObj =[];
-        var dtUserTable = $('#user-list-table');
+        var dtUserTable = $('#employee-list-table');
         if (dtUserTable.length) {
             dtUserTable.DataTable({
-            // ajax: '/sadmin/customer',
+            // ajax: '/sadmin/employee',
             ajax: {
-                "url": "/sadmin/customer",
+                "url": "{{ route('backend.employee.index') }}",
                 "type": "GET",
                 "datatype": "json"
             },// JSON file to add data
             columns: [
                 // columns according to JSON
                 { data: 'id' },
-                { data: 'name', name:'name' },
+                { data: 'name' },
                 { data: 'mobile' },
-                { data: 'offer.name' },
-                { data: 'billing' },
+                { data: 'email'},
+                { data: 'areas' },
                 { data:'status'},
                 { data: '' }
             ],
@@ -260,7 +184,7 @@
                 responsivePriority: 4,
                 render: function (data, type, full, meta) {
                     var $name = full['name'],
-                    $ip_id = full['ip_id'],
+                    $ip_id = '',
                     $image = full['image'];
 
                     if ($image) {
@@ -296,25 +220,18 @@
                 // User Role
                 targets: 2,
                 render: function (data, type, full, meta) {
-                    // var $role = full['moble'];
-                    // var roleBadgeObj = {
-                    // Subscriber: feather.icons['user'].toSvg({ class: 'font-medium-3 text-primary me-50' }),
-                    // Author: feather.icons['settings'].toSvg({ class: 'font-medium-3 text-warning me-50' }),
-                    // Maintainer: feather.icons['database'].toSvg({ class: 'font-medium-3 text-success me-50' }),
-                    // Editor: feather.icons['edit-2'].toSvg({ class: 'font-medium-3 text-info me-50' }),
-                    // Admin: feather.icons['slack'].toSvg({ class: 'font-medium-3 text-danger me-50' })
-                    // };
-                    // console.log(roleBadgeObj);
-                    // return "<span class='text-truncate align-middle'>" + roleBadgeObj[$role] + $role + '</span>';
                     return "<span class='text-truncate align-middle'>" + full['mobile'] + '</span>';
                 }
                 },
                 {
                 targets: 4,
                 render: function (data, type, full, meta) {
-                    var $billing = full['billing'];
-
-                    return '<span class="text-nowrap">' + $billing + '</span>';
+                    var $billing = full['areas'];
+                    var areaArray= new Array();
+                    $billing.forEach(element => {
+                        areaArray.push(element.area_name.name)
+                    });
+                    return '<span class="text-nowrap">' + areaArray  + '</span>';
                 }
                 },
                 {
@@ -423,11 +340,12 @@
                 }
                 },
                 {
-                text: 'Add New User',
+                text: 'Add New Employee',
                 className: 'add-new btn btn-primary',
                 attr: {
-                    'data-bs-toggle': 'modal',
-                    'data-bs-target': '#modals-slide-in'
+                    'herf' :'/',
+                    // 'data-bs-toggle': 'modal',
+                    // 'data-bs-target': '#modals-slide-in'
                 },
                 init: function (api, node, config) {
                     $(node).removeClass('btn-secondary');
@@ -475,37 +393,42 @@
             },
             initComplete: function () {
                 // Adding role filter once table initialized
-                // this.api()
-                // .columns(2)
-                // .every(function () {
-                //     var column = this;
-                //     var label = $('<label class="form-label" for="UserRole">Role</label>').appendTo('.user_role');
-                //     var select = $(
-                //     '<select id="UserRole" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Select Role </option></select>'
-                //     )
-                //     .appendTo('.user_role')
-                //     .on('change', function () {
-                //         var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                //         column.search(val ? '^' + val + '$' : '', true, false).draw();
-                //     });
+                this.api()
+                .columns(4)
+                .every(function () {
+                    var column = this;
+                    var label = $('<label class="form-label" for="UserRole">Area</label>').appendTo('.user_role');
+                    var select = $(
+                    '<select id="UserRole" class="form-select select2  text-capitalize mb-md-0 mb-2"><option value=""> Select Area </option></select>'
+                    )
+                    .appendTo('.user_role')
+                    .on('change', function (e) {
+                        var val = $.fn.dataTable.util.escapeRegex(this.options[this.selectedIndex].text);
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
 
-                //     column
-                //     .data()
-                //     .unique()
-                //     .sort()
-                //     .each(function (d, j) {
-                //         select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
-                //     });
-                // });
+                    column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d, j) {
+                        // console.log(d);
+                        var areaArray= new Array();
+                        d.forEach(element => {
+                            areaArray.push(element.area_name.name)
+                        });
+                        select.append('<option value="' + areaArray + '" class="text-capitalize">' + areaArray + '</option>');
+                    });
+                });
 
                 // Adding plan filter once table initialized
                 this.api()
-                .columns(3)
+                .columns(2)
                 .every(function () {
                     var column = this;
-                    var label = $('<label class="form-label" for="UserPlan">Plan</label>').appendTo('.user_plan');
+                    var label = $('<label class="form-label" for="UserPlan">Mobile</label>').appendTo('.user_plan');
                     var select = $(
-                    '<select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Select Plan </option></select>'
+                    '<select id="UserPlan" class="form-select text-capitalize mb-md-0 mb-2"><option value=""> Select Mobile </option></select>'
                     )
                     .appendTo('.user_plan')
                     .on('change', function () {
@@ -534,6 +457,7 @@
                     .appendTo('.user_status')
                     .on('change', function () {
                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
                         if (val == true) {
                            var $statusValue = 'Active';
                         }else{
@@ -547,10 +471,13 @@
                     .unique()
                     .sort()
                     .each(function (d, j) {
+                        // console.log(j, d);
                         if (j == true) {
                             var $statusValue = 'Active';
+                            d = 1;
                         }else{
                             var $statusValue = 'Deactive';
+                            d = 0;
                         }
                         select.append('<option value="' + d + '" class="text-capitalize">' +  $statusValue + '</option>');
                     });
@@ -559,5 +486,15 @@
             });
         }
     });
+
 </script>
+<script>
+
+
+    $(document).on('click', '.add-new', function(){
+        window.location = "{{ route('backend.employee.create') }}";
+    })
+
+</script>
+
 @endpush

@@ -6,10 +6,11 @@ use App\Traits\AutoDeleteFile;
 use App\Traits\AutoTimeStamp;
 use App\Traits\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use AutoTimeStamp, Sluggable, AutoDeleteFile;
+    use AutoTimeStamp, Sluggable, AutoDeleteFile, SoftDeletes;
 
     protected $guarded = ['id'];
 
