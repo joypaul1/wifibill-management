@@ -5,16 +5,10 @@
 @push('css')
 {{-- Page Css files --}}
 
-<link rel="stylesheet"
-  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
-<link rel="stylesheet"
-  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
-<link rel="stylesheet"
-  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
-{{-- <link rel="stylesheet"
-  href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}"> --}}
-  <link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/forms/select/select2.min.css')) }}">
-
+<link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(('assets/app-assets/vendors/css/forms/select/select2.min.css')) }}">
 
 @endpush
 
@@ -146,12 +140,10 @@
   $(function () {
         var userView = window.location.origin+ '/userView';
         var assetPath =window.location.origin ;
-
         var statusObj =[];
         var dtUserTable = $('#employee-list-table');
         if (dtUserTable.length) {
             dtUserTable.DataTable({
-            // ajax: '/sadmin/employee',
             ajax: {
                 "url": "{{ route('backend.employee.index') }}",
                 "type": "GET",
