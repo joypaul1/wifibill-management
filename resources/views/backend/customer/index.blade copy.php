@@ -110,62 +110,81 @@
     <!-- Modal to add new user starts-->
     <div class="modal modal-slide-in new-user-modal fade" id="modals-slide-in">
       <div class="modal-dialog">
-        <form action="{{ route('backend.customer.store') }}" method="POST"
-            class="add-new-user modal-content pt-0">
-            @method('POST')
-            @csrf
+        <form class="add-new-user modal-content pt-0">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
           <div class="modal-header mb-1">
             <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
           </div>
           <div class="modal-body flex-grow-1">
             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-fullname"> Name</label>
+              <label class="form-label" for="basic-icon-default-fullname">Full Name</label>
               <input
                 type="text"
                 class="form-control dt-full-name"
                 id="basic-icon-default-fullname"
-                placeholder="user name..."
-                name="name"
-                required
+                placeholder="John Doe"
+                name="user-fullname"
               />
             </div>
-
-            {{-- <div class="mb-1">
+            <div class="mb-1">
+              <label class="form-label" for="basic-icon-default-uname">Username</label>
+              <input
+                type="text"
+                id="basic-icon-default-uname"
+                class="form-control dt-uname"
+                placeholder="Web Developer"
+                name="user-name"
+              />
+            </div>
+            <div class="mb-1">
               <label class="form-label" for="basic-icon-default-email">Email</label>
               <input
                 type="text"
                 id="basic-icon-default-email"
                 class="form-control dt-email"
                 placeholder="john.doe@example.com"
-                name="email"
+                name="user-email"
               />
-            </div> --}}
+            </div>
             <div class="mb-1">
-              <label class="form-label" for="basic-icon-default-contact">Mobile</label>
+              <label class="form-label" for="basic-icon-default-contact">Contact</label>
               <input
                 type="text"
                 id="basic-icon-default-contact"
                 class="form-control dt-contact"
-                placeholder="01......."
-                name="mobile"
-                required
+                placeholder="+1 (609) 933-44-22"
+                name="user-contact"
               />
             </div>
-
             <div class="mb-1">
-              <label class="form-label" for="country">Package</label>
-              <select id="country" class="select2 form-select" name="offer_id" required>
-                @forelse ($packages as $package)
-                <option value="{{  $package->id }}">{{ $package->name }}</option>
-                @empty
-
-                @endforelse
+              <label class="form-label" for="basic-icon-default-company">Company</label>
+              <input
+                type="text"
+                id="basic-icon-default-company"
+                class="form-control dt-contact"
+                placeholder="PIXINVENT"
+                name="user-company"
+              />
+            </div>
+            <div class="mb-1">
+              <label class="form-label" for="country">Country</label>
+              <select id="country" class="select2 form-select">
+                <option value="Australia">USA</option>
               </select>
             </div>
-
-
-            <button type="submit" class="btn btn-primary me-1 data-submit user-submit" onClick='submitDetailsForm()'>Submit</button>
+            <div class="mb-1">
+              <label class="form-label" for="user-role">User Role</label>
+              <select id="user-role" class="select2 form-select">
+                <option value="subscriber">Subscriber</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label class="form-label" for="user-plan">Select Package</label>
+              <select id="user-plan" name="offer_id" class="select2 form-select">
+                <option value="basic">Basic</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary me-1 data-submit">Submit</button>
             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
           </div>
         </form>
@@ -200,24 +219,6 @@
   <script src="{{ asset(('assets/app-assets/vendors/js/forms/cleave/addons/cleave-phone.us.js')) }}"></script>
 
 <script>
-     function submitDetailsForm() {
-    //    $(".add-new-user").submit();
-        var values = $(".add-new-user").serialize();
-
-       $.ajax({
-        type: "GET",
-        url: "{{ route('backend.customer.store') }}",
-        data: values,
-        dataType: "dataType",
-        success: function (response) {
-
-        }
-       });
-    }
-    // $('.user-submit').click(function (e) {
-    //     e.preventDefault();
-
-    // });
     $(function () {
         var userView = window.location.origin+ '/userView';
         var assetPath =window.location.origin ;
@@ -228,7 +229,7 @@
             dtUserTable.DataTable({
             // ajax: '/sadmin/customer',
             ajax: {
-                "url": "{{ route('backend.customer.index') }}",
+                "url": "/sadmin/customer",
                 "type": "GET",
                 "datatype": "json"
             },// JSON file to add data
@@ -252,7 +253,7 @@
                 render: function (data, type, full, meta) {
                     return '';
                 }
-                },
+                চার পেয়ালা হৃদ কমলে ক্রমে হবে উজালা },
                 {
                 // User full name and username
                 targets: 1,

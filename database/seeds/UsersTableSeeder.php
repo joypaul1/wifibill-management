@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'User',
             'email' => 'user@test.com',
+            'mobile' => '123456789',
             'password' => Hash::make('12345678'),
             'image' => 'defaults/user.png',
         ]);

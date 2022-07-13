@@ -17,7 +17,7 @@ class Item extends Model
     {
         return $this->belongsTo(Unit::class);
     }
-
+    
     public function origin()
     {
         return $this->belongsTo(Origin::class);

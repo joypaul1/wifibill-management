@@ -14,7 +14,8 @@
 
     <div class="card">
         <div class="card-body">
-            <form class="needs-validation invoice-repeater row" method="post" action="{{ route('backend.offer.store') }}"
+            <form class="needs-validation invoice-repeater row" method="post"
+                action="{{ route('backend.offer.store') }}"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-6 col-12">
@@ -63,7 +64,6 @@
                                         <button class="btn btn-outline-danger text-nowrap px-1" data-repeater-delete
                                             type="button">
                                             <i data-feather="x" class="me-25"></i>
-
                                         </button>
                                     </div>
                                 </div>

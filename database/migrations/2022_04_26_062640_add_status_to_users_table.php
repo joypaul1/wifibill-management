@@ -15,7 +15,7 @@ class AddStatusToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('status')->default(1);
-            $table->boolean('mobile')->after('email');
+            $table->string('mobile')->after('email');
             $table->unsignedBigInteger('offer_id')->nullable();
             $table->foreign('offer_id')->references('id')->on('offers');
         });

@@ -20,6 +20,7 @@ Route::group(['prefix' => 'sources'], function () {
         ->name('backend.purchase.sources.update');
 });
 
+
 // Purchases
 Route::group(['prefix' => 'purchases'], function () {
     Route::get('/', 'PurchaseController@index')

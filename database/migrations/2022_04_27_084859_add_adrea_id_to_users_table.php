@@ -16,6 +16,7 @@ class AddAdreaIdToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('area_id')->nullable();
             $table->foreign('area_id')->references('id')->on('areas');
+            $table->text('ip_id')->nullable();
             $table->text('address')->nullable();
         });
         Schema::table('employees', function (Blueprint $table) {

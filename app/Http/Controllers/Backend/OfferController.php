@@ -102,7 +102,7 @@ class OfferController extends Controller
     {
         try {
             DB::beginTransaction();
-             $all = $request->except('_token', 'item');
+            $all = $request->except('_token', 'item');
             if($request->image){
             $all['image'] = (new SimpleUpload)
                 ->file($request->image)
@@ -114,10 +114,12 @@ class OfferController extends Controller
             $offer->update($all);
 
             foreach ($offer->serials()->get() as  $key  => $value) {
+
                 if(in_array( $value->id, array_keys ($request->item))){
+
                     $value->update(['name' =>$request->item[$value->id]]);
                 }else{
-                    $value->delete();
+                   $value->delete();
                 }
             }
 
@@ -127,7 +129,7 @@ class OfferController extends Controller
             DB::commit();
             } catch (\Exception $ex) {
                 DB::rollback();
-                return back()->with('error',$ex->getMessage());
+                return back()->with('message',$ex->getMessage());
             }
         return back()->with('message', 'Offer Update Successfully!');
     }

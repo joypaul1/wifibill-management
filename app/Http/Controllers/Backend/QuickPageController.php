@@ -39,7 +39,6 @@ class QuickPageController extends Controller
      */
     public function store(QuickpageRequest $request)
     {
-
         $all = $request->all();
         QuickPage::create($all);
         return redirect()->route('backend.site_config.quick-page.index')->with('message', 'Quick Page created Successfully.');
@@ -66,7 +65,6 @@ class QuickPageController extends Controller
     public function edit($id)
     {
         $page = QuickPage::find($id);
-        // dd($page);
         return view ('backend.quick-page.edit',compact('page'));
     }
 
